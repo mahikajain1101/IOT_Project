@@ -1,0 +1,140 @@
+<html>
+<head>
+	<link rel="icon" type="image/xicon" href="https://upload.wikimedia.org/wikipedia/commons/1/17/Color_icon_purple.svg">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+
+	<title>North Mess</title>
+	<link rel="stylesheet" href="./styles.css">
+	<script src="./myscripts.js"></script>
+
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+	</script>
+	<link href= "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<style>
+		.container{
+			background-color: #107791;
+			background-image: url("./Media/four.jpg");
+			border-radius: 30%;
+		}
+		p{
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body onload="load()">
+
+<!-- For Navbar -->
+<div class="newnavbar" >
+	<a class="nav-img"> <img  class="van-i" src="./Media/2.webp"> </a>
+	<a href="#about"> Current occupancy </a>
+	<a href="#edu"> Comparision </a>
+	<a href="#achieve"> Temperature </a>
+	<a href="#skills">And Humidity </a>
+	<a href="#news"> Info </a>
+
+</div>
+
+<div class="dummy"> You shall not see it </div>
+<div class="containers"><!-- For Counter -->
+
+
+	<p>
+	<div class="d-flex justify-content-center fs-1 fw-bold heading ">Welcome To North Mess</div>
+	<div class="heading2 d-flex justify-content-center fs-1 fw-bold ">Counter of people in mess</div>
+	</p>
+	<p>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				<p id='0101' class="fs-2 text-light">0</p>
+				<p class="text-light">Site visits</p>
+			</div>
+			<div class="col-sm">
+				<p id='0102' class="fs-2 text-light">876</p>
+				<p class="text-light">Members signed</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+	<!-- For four graphs -->
+	<div class="graphAll">
+
+		<div class="graphEach" id="NE" >
+			<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+		</div>
+		<div class="graphEach" id="NW"> X </div>
+		<div class="graphEach" id ="SE"> X </div>
+		<div class="graphEach" id="SW"> X </div>
+
+	</div>
+
+
+	<script>
+		var xValues = ["12:30","13:00","13:30","14:00","14:30"]
+		var barcolors = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+		var yValues = [123,234,120,45,56]
+		var myChart = new Chart("myChart", {
+			type: "bar",
+			data: {
+				labels: xValues,
+				datasets: [{
+					label: "Population of North Mess",
+					backgroundColor: barcolors,
+					data: yValues
+				}]
+			},
+			options: {}
+		});
+	</script>
+	<script>
+		function animate(obj, initVal, lastVal, duration) {
+			let startTime = null;
+
+			//get the current timestamp and assign it to the currentTime variable
+			let currentTime = Date.now();
+
+			//pass the current timestamp to the step function
+			const step = (currentTime ) => {
+
+				//if the start time is null, assign the current time to startTime
+				if (!startTime) {
+					startTime = currentTime ;
+				}
+
+				//calculate the value to be used in calculating the number to be displayed
+				const progress = Math.min((currentTime - startTime)/ duration, 1);
+
+				//calculate what to be displayed using the value gotten above
+				obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
+
+				//checking to make sure the counter does not exceed the last value (lastVal)
+				if (progress < 1) {
+					window.requestAnimationFrame(step);
+				} else {
+					window.cancelAnimationFrame(window.requestAnimationFrame(step));
+				}
+			};
+			//start animating
+			window.requestAnimationFrame(step);
+		}
+		let text1 = document.getElementById('0101');
+		let text2 = document.getElementById('0102');
+		let text3 = document.getElementById('0103');
+		const load = () => {
+			animate(text1, 0, 511, 7000);
+			animate(text2, 0, 232, 7000);
+			animate(text3, 100, 25, 7000);
+		}
+	</script>
+</body>
+</html>
+
+
